@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ABC-анализ ассортимента</title>
+<style>
+:root { color-scheme: light dark; --ink:#151a21; --ink-2:#5c6773; --line:#e1e5ea; --bg:#f5f7f8;
+        --card:#ffffff; --good:#1f6b3a; --warn:#8a6100; --bad:#b3261e; }
+@media (prefers-color-scheme: dark) {
+  :root { --ink:#e9edf2; --ink-2:#98a2ad; --line:#2a3138; --bg:#10141a; --card:#181d24;
+          --good:#8fd6a8; --warn:#ffcc80; --bad:#ff8a80; }
+}
+* { box-sizing: border-box; }
+body { margin:0; padding:28px 16px 56px; background:var(--bg); color:var(--ink);
+       font:15px/1.55 "Segoe UI", Roboto, Arial, sans-serif; }
+main { max-width: 1040px; margin:0 auto; }
+h1 { font-size:1.6rem; margin:0 0 6px; }
+h2 { font-size:1.05rem; margin:0 0 4px; }
+.question { color:var(--ink-2); margin:0 0 18px; }
+.sub { color:var(--ink-2); font-size:.9rem; margin:0 0 10px; }
+.note { color:var(--ink-2); font-size:.86rem; margin:10px 0 0; }
+.cards { display:grid; grid-template-columns:repeat(auto-fit, minmax(190px,1fr)); gap:12px; margin-bottom:22px; }
+.card { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:14px 16px; }
+.card-title { font-size:.82rem; color:var(--ink-2); }
+.card-value { font-size:1.55rem; font-variant-numeric:tabular-nums; margin:4px 0 2px; }
+.card-note { font-size:.82rem; color:var(--ink-2); }
+.card.good .card-value { color:var(--good); }
+.card.warn .card-value { color:var(--warn); }
+.card.bad .card-value { color:var(--bad); }
+.block { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:16px; margin-bottom:16px; }
+.body { overflow-x:auto; }
+table { border-collapse:collapse; width:100%; font-size:.9rem; }
+th, td { padding:7px 10px; border-bottom:1px solid var(--line); text-align:left; }
+th.right, td.right { text-align:right; font-variant-numeric:tabular-nums; }
+thead th { color:var(--ink-2); font-weight:600; font-size:.82rem; }
+.chart { width:100%; height:auto; }
+.chart .tick { font-size:11px; fill:var(--ink-2); }
+.chart .value { font-size:11px; fill:var(--ink-2); font-variant-numeric:tabular-nums; }
+.legend { display:flex; flex-wrap:wrap; gap:14px; margin-top:8px; font-size:.84rem; color:var(--ink-2); }
+.legend i { display:inline-block; width:10px; height:10px; border-radius:2px; margin-right:6px; }
+.hbars .row { display:grid; grid-template-columns:minmax(120px,1fr) 3fr minmax(120px,auto); gap:10px;
+              align-items:center; padding:5px 0; }
+.hbars .label { font-size:.9rem; }
+.hbars .track { background:var(--line); border-radius:6px; height:14px; }
+.hbars .fill { display:block; height:14px; border-radius:6px; background:#2f6f4e; }
+.hbars .value { font-size:.86rem; color:var(--ink-2); font-variant-numeric:tabular-nums; text-align:right; }
+.heatmap td.heat { text-align:right; font-variant-numeric:tabular-nums; }
+.heatmap td.empty-cell { background:transparent; }
+.empty { color:var(--ink-2); }
+footer { color:var(--ink-2); font-size:.84rem; margin-top:24px; }
+code { background:var(--line); padding:1px 5px; border-radius:4px; }
+@media (max-width:560px) { .hbars .row { grid-template-columns:1fr; } .hbars .value { text-align:left; } }
+</style>
+</head>
+<body>
+<main>
+<h1>ABC-анализ ассортимента</h1>
+<p class="question">Какие товары дают выручку, а какие занимают полку?</p>
+<p class="sub">Группа определяется накопленной долей выручки, посчитанной оконной функцией.</p><div class="cards"><div class="card "><div class="card-title">Товаров в группе A</div><div class="card-value">458</div><div class="card-note">из 900 в каталоге</div></div><div class="card "><div class="card-title">Доля выручки группы A</div><div class="card-value">80,0%</div><div class="card-note">первые 80% по определению</div></div><div class="card "><div class="card-title">Не продавались ни разу</div><div class="card-value">0</div><div class="card-note">весь каталог хотя бы раз продавался</div></div><div class="card "><div class="card-title">Выручка ассортимента</div><div class="card-value">1 035 073 883 ₽</div><div class="card-note">за весь период</div></div></div>
+<section class="block"><h2>Группы ABC</h2><p class="sub">A — первые 80% выручки, B — до 95%, C — остальное</p><div class="body"><table><thead><tr><th class="">Группа</th><th class="right">Товаров</th><th class="right">Доля позиций</th><th class="right">Выручка</th><th class="right">Доля выручки</th><th class="right">Прибыль</th></tr></thead><tbody><tr><td class="">A</td><td class="right">458</td><td class="right">50,9%</td><td class="right">827 614 129 ₽</td><td class="right">80,0%</td><td class="right">191 421 745 ₽</td></tr><tr><td class="">B</td><td class="right">255</td><td class="right">28,3%</td><td class="right">155 557 824 ₽</td><td class="right">15,0%</td><td class="right">38 561 185 ₽</td></tr><tr><td class="">C</td><td class="right">187</td><td class="right">20,8%</td><td class="right">51 901 930 ₽</td><td class="right">5,0%</td><td class="right">13 115 144 ₽</td></tr></tbody></table></div></section><section class="block"><h2>Категории</h2><p class="sub">выручка и прибыль за весь период</p><div class="body"><div class="hbars"><div class="row"><span class="label">молочное</span><span class="track"><span class="fill" style="width:100.0%"></span></span><span class="value">323,1 млн</span></div><div class="row"><span class="label">бакалея</span><span class="track"><span class="fill" style="width:79.0%"></span></span><span class="value">255,3 млн</span></div><div class="row"><span class="label">мясо и рыба</span><span class="track"><span class="fill" style="width:46.0%"></span></span><span class="value">148,5 млн</span></div><div class="row"><span class="label">овощи и фрукты</span><span class="track"><span class="fill" style="width:39.8%"></span></span><span class="value">128,5 млн</span></div><div class="row"><span class="label">напитки</span><span class="track"><span class="fill" style="width:26.6%"></span></span><span class="value">85,9 млн</span></div><div class="row"><span class="label">бытовая химия</span><span class="track"><span class="fill" style="width:18.6%"></span></span><span class="value">60,2 млн</span></div><div class="row"><span class="label">детское</span><span class="track"><span class="fill" style="width:10.4%"></span></span><span class="value">33,5 млн</span></div></div></div></section><section class="block"><h2>Топ-15 товаров</h2><div class="body"><table><thead><tr><th class="">Товар</th><th class="">Категория</th><th class="">Группа</th><th class="right">Выручка</th><th class="right">Прибыль</th><th class="right">Штук</th></tr></thead><tbody><tr><td class="">Товар 841</td><td class="">молочное</td><td class="">A</td><td class="right">9 082 060 ₽</td><td class="right">1 704 121 ₽</td><td class="right">11 013</td></tr><tr><td class="">Товар 732</td><td class="">молочное</td><td class="">A</td><td class="right">7 203 103 ₽</td><td class="right">1 537 027 ₽</td><td class="right">11 612</td></tr><tr><td class="">Товар 125</td><td class="">бакалея</td><td class="">A</td><td class="right">6 986 383 ₽</td><td class="right">1 692 026 ₽</td><td class="right">10 387</td></tr><tr><td class="">Товар 528</td><td class="">молочное</td><td class="">A</td><td class="right">6 567 259 ₽</td><td class="right">1 359 744 ₽</td><td class="right">11 395</td></tr><tr><td class="">Товар 29</td><td class="">молочное</td><td class="">A</td><td class="right">6 527 120 ₽</td><td class="right">1 498 119 ₽</td><td class="right">11 482</td></tr><tr><td class="">Товар 518</td><td class="">бакалея</td><td class="">A</td><td class="right">6 335 151 ₽</td><td class="right">1 603 608 ₽</td><td class="right">10 152</td></tr><tr><td class="">Товар 483</td><td class="">молочное</td><td class="">A</td><td class="right">6 327 661 ₽</td><td class="right">1 335 570 ₽</td><td class="right">11 511</td></tr><tr><td class="">Товар 410</td><td class="">мясо и рыба</td><td class="">A</td><td class="right">6 289 665 ₽</td><td class="right">1 019 488 ₽</td><td class="right">8 472</td></tr><tr><td class="">Товар 149</td><td class="">овощи и фрукты</td><td class="">A</td><td class="right">6 267 468 ₽</td><td class="right">1 423 836 ₽</td><td class="right">7 232</td></tr><tr><td class="">Товар 829</td><td class="">бакалея</td><td class="">A</td><td class="right">5 959 041 ₽</td><td class="right">1 399 528 ₽</td><td class="right">10 219</td></tr><tr><td class="">Товар 360</td><td class="">молочное</td><td class="">A</td><td class="right">5 585 266 ₽</td><td class="right">1 403 350 ₽</td><td class="right">11 426</td></tr><tr><td class="">Товар 688</td><td class="">бытовая химия</td><td class="">A</td><td class="right">5 162 216 ₽</td><td class="right">1 702 737 ₽</td><td class="right">4 774</td></tr><tr><td class="">Товар 426</td><td class="">бакалея</td><td class="">A</td><td class="right">4 955 366 ₽</td><td class="right">1 382 805 ₽</td><td class="right">10 447</td></tr><tr><td class="">Товар 238</td><td class="">овощи и фрукты</td><td class="">A</td><td class="right">4 865 339 ₽</td><td class="right">1 190 251 ₽</td><td class="right">7 144</td></tr><tr><td class="">Товар 387</td><td class="">молочное</td><td class="">A</td><td class="right">4 609 565 ₽</td><td class="right">945 654 ₽</td><td class="right">11 349</td></tr></tbody></table></div></section><section class="block"><h2>Хвост ассортимента</h2><p class="sub">группа C: продаются, но почти не дают выручки</p><div class="body"><table><thead><tr><th class="">Товар</th><th class="">Категория</th><th class="right">Выручка</th><th class="right">Штук</th></tr></thead><tbody><tr><td class="">Товар 600</td><td class="">бытовая химия</td><td class="right">113 730 ₽</td><td class="right">4 632</td></tr><tr><td class="">Товар 377</td><td class="">напитки</td><td class="right">113 126 ₽</td><td class="right">6 274</td></tr><tr><td class="">Товар 545</td><td class="">бытовая химия</td><td class="right">109 972 ₽</td><td class="right">4 729</td></tr><tr><td class="">Товар 21</td><td class="">напитки</td><td class="right">108 649 ₽</td><td class="right">6 204</td></tr><tr><td class="">Товар 19</td><td class="">овощи и фрукты</td><td class="right">107 669 ₽</td><td class="right">7 224</td></tr><tr><td class="">Товар 466</td><td class="">детское</td><td class="right">107 354 ₽</td><td class="right">3 703</td></tr><tr><td class="">Товар 714</td><td class="">бытовая химия</td><td class="right">95 769 ₽</td><td class="right">4 856</td></tr><tr><td class="">Товар 593</td><td class="">бытовая химия</td><td class="right">82 413 ₽</td><td class="right">4 629</td></tr><tr><td class="">Товар 658</td><td class="">детское</td><td class="right">71 435 ₽</td><td class="right">3 613</td></tr><tr><td class="">Товар 854</td><td class="">детское</td><td class="right">69 024 ₽</td><td class="right">3 652</td></tr></tbody></table></div><p class="note">Прежде чем выводить позицию из ассортимента, стоит посмотреть, не покупают ли её вместе с чем-то дорогим: в этих данных такой связи не видно, но в жизни она бывает решающей.</p></section>
+<footer>Источник: витрина товар_месяц и справочник товаров. Собрано 12.09.2026 командой <code>bi dashboard</code>; витрины пересобираются из данных, страница не правится руками.</footer>
+</main>
+</body>
+</html>

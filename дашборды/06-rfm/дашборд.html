@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RFM: сегменты покупателей</title>
+<style>
+:root { color-scheme: light dark; --ink:#151a21; --ink-2:#5c6773; --line:#e1e5ea; --bg:#f5f7f8;
+        --card:#ffffff; --good:#1f6b3a; --warn:#8a6100; --bad:#b3261e; }
+@media (prefers-color-scheme: dark) {
+  :root { --ink:#e9edf2; --ink-2:#98a2ad; --line:#2a3138; --bg:#10141a; --card:#181d24;
+          --good:#8fd6a8; --warn:#ffcc80; --bad:#ff8a80; }
+}
+* { box-sizing: border-box; }
+body { margin:0; padding:28px 16px 56px; background:var(--bg); color:var(--ink);
+       font:15px/1.55 "Segoe UI", Roboto, Arial, sans-serif; }
+main { max-width: 1040px; margin:0 auto; }
+h1 { font-size:1.6rem; margin:0 0 6px; }
+h2 { font-size:1.05rem; margin:0 0 4px; }
+.question { color:var(--ink-2); margin:0 0 18px; }
+.sub { color:var(--ink-2); font-size:.9rem; margin:0 0 10px; }
+.note { color:var(--ink-2); font-size:.86rem; margin:10px 0 0; }
+.cards { display:grid; grid-template-columns:repeat(auto-fit, minmax(190px,1fr)); gap:12px; margin-bottom:22px; }
+.card { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:14px 16px; }
+.card-title { font-size:.82rem; color:var(--ink-2); }
+.card-value { font-size:1.55rem; font-variant-numeric:tabular-nums; margin:4px 0 2px; }
+.card-note { font-size:.82rem; color:var(--ink-2); }
+.card.good .card-value { color:var(--good); }
+.card.warn .card-value { color:var(--warn); }
+.card.bad .card-value { color:var(--bad); }
+.block { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:16px; margin-bottom:16px; }
+.body { overflow-x:auto; }
+table { border-collapse:collapse; width:100%; font-size:.9rem; }
+th, td { padding:7px 10px; border-bottom:1px solid var(--line); text-align:left; }
+th.right, td.right { text-align:right; font-variant-numeric:tabular-nums; }
+thead th { color:var(--ink-2); font-weight:600; font-size:.82rem; }
+.chart { width:100%; height:auto; }
+.chart .tick { font-size:11px; fill:var(--ink-2); }
+.chart .value { font-size:11px; fill:var(--ink-2); font-variant-numeric:tabular-nums; }
+.legend { display:flex; flex-wrap:wrap; gap:14px; margin-top:8px; font-size:.84rem; color:var(--ink-2); }
+.legend i { display:inline-block; width:10px; height:10px; border-radius:2px; margin-right:6px; }
+.hbars .row { display:grid; grid-template-columns:minmax(120px,1fr) 3fr minmax(120px,auto); gap:10px;
+              align-items:center; padding:5px 0; }
+.hbars .label { font-size:.9rem; }
+.hbars .track { background:var(--line); border-radius:6px; height:14px; }
+.hbars .fill { display:block; height:14px; border-radius:6px; background:#2f6f4e; }
+.hbars .value { font-size:.86rem; color:var(--ink-2); font-variant-numeric:tabular-nums; text-align:right; }
+.heatmap td.heat { text-align:right; font-variant-numeric:tabular-nums; }
+.heatmap td.empty-cell { background:transparent; }
+.empty { color:var(--ink-2); }
+footer { color:var(--ink-2); font-size:.84rem; margin-top:24px; }
+code { background:var(--line); padding:1px 5px; border-radius:4px; }
+@media (max-width:560px) { .hbars .row { grid-template-columns:1fr; } .hbars .value { text-align:left; } }
+</style>
+</head>
+<body>
+<main>
+<h1>RFM: сегменты покупателей</h1>
+<p class="question">Кого удерживать, кого возвращать, а кого уже не трогать?</p>
+<p class="sub">Давность считается от последнего дня данных, а не от сегодняшней даты: витрина не обязана стареть между пересборками.</p><div class="cards"><div class="card "><div class="card-title">Покупателей с картой</div><div class="card-value">8 896</div><div class="card-note">тех, у кого есть хотя бы одна покупка</div></div><div class="card "><div class="card-title">Покупали за последние 30 дней</div><div class="card-value">4 154</div><div class="card-note">46,7% базы</div></div><div class="card "><div class="card-title">Доля денег у верхних 20%</div><div class="card-value">72,1%</div><div class="card-note">если бы все платили поровну, было бы 20%</div></div><div class="card warn"><div class="card-title">Под угрозой</div><div class="card-value">1 365</div><div class="card-note">312 198 929 ₽ выручки в прошлом</div></div></div>
+<section class="block"><h2>Сегменты</h2><p class="sub">и что с каждым делать</p><div class="body"><table><thead><tr><th class="">Сегмент</th><th class="right">Клиентов</th><th class="right">Доля</th><th class="right">Деньги</th><th class="right">Медиана покупок</th><th class="right">Дней с покупки</th><th class="">Что делать</th></tr></thead><tbody><tr><td class="">Чемпионы</td><td class="right">1 605</td><td class="right">18,0%</td><td class="right">446 382 008 ₽</td><td class="right">176</td><td class="right">1</td><td class="">покупают часто и недавно — держать, а не «активировать» скидкой</td></tr><tr><td class="">Лояльные</td><td class="right">1 342</td><td class="right">15,1%</td><td class="right">44 296 168 ₽</td><td class="right">37</td><td class="right">2</td><td class="">ровная база сети: им интересны новинки и программа лояльности</td></tr><tr><td class="">Новички</td><td class="right">611</td><td class="right">6,9%</td><td class="right">3 728 270 ₽</td><td class="right">7</td><td class="right">4</td><td class="">пришли недавно, привычки ещё нет — важна вторая покупка</td></tr><tr><td class="">Засыпающие</td><td class="right">1 779</td><td class="right">20,0%</td><td class="right">176 534 933 ₽</td><td class="right">36</td><td class="right">50</td><td class="">перестали ходить месяц-полтора назад, вернуть ещё дёшево</td></tr><tr><td class="">Под угрозой</td><td class="right">1 365</td><td class="right">15,3%</td><td class="right">312 198 929 ₽</td><td class="right">164</td><td class="right">298</td><td class="">ходили часто, но давно не были — самая дорогая потеря</td></tr><tr><td class="">Потерянные</td><td class="right">2 194</td><td class="right">24,7%</td><td class="right">51 933 576 ₽</td><td class="right">25</td><td class="right">369</td><td class="">редко и давно; массовая рассылка по ним только жжёт бюджет</td></tr></tbody></table></div></section><section class="block"><h2>Деньги по сегментам</h2><p class="sub">сумма покупок за весь период, ₽</p><div class="body"><div class="hbars"><div class="row"><span class="label">Чемпионы</span><span class="track"><span class="fill" style="width:100.0%"></span></span><span class="value">446,4 млн</span></div><div class="row"><span class="label">Лояльные</span><span class="track"><span class="fill" style="width:9.9%"></span></span><span class="value">44,3 млн</span></div><div class="row"><span class="label">Новички</span><span class="track"><span class="fill" style="width:0.8%"></span></span><span class="value">3,7 млн</span></div><div class="row"><span class="label">Засыпающие</span><span class="track"><span class="fill" style="width:39.5%"></span></span><span class="value">176,5 млн</span></div><div class="row"><span class="label">Под угрозой</span><span class="track"><span class="fill" style="width:69.9%"></span></span><span class="value">312,2 млн</span></div><div class="row"><span class="label">Потерянные</span><span class="track"><span class="fill" style="width:11.6%"></span></span><span class="value">51,9 млн</span></div></div></div></section><section class="block"><h2>Матрица давности и частоты</h2><p class="sub">доля всех покупателей в каждой клетке; строки — давность (5 — покупали недавно)</p><div class="body"><table class="heatmap"><thead><tr><th></th><th>F1</th><th>F2</th><th>F3</th><th>F4</th><th>F5</th></tr></thead><tbody><tr><th>R5</th><td class="heat" style="background: color-mix(in srgb, #2f6f4e 21%, transparent)">1,9%</td><td class="heat" style="background: color-mix(in srgb, #2f6f4e 29%, transparent)">2,7%</td><td class="heat" style="background: color-mix(in srgb, #2f6f4e 33%, transparent)">3,1%</td><td class="heat" style="background: color-mix(in srgb, #2f6f4e 51%, transparent)">4,9%</td><td class="heat" style="background: color-mix(in srgb, #2f6f4e 78%, transparent)">7,4%</td></tr><tr><th>R4</th><td class="heat" style="background: color-mix(in srgb, #2f6f4e 52%, transparent)">4,9%</td><td class="heat" style="background: color-mix(in srgb, #2f6f4e 46%, transparent)">4,4%</td><td class="heat" style="background: color-mix(in srgb, #2f6f4e 52%, transparent)">4,9%</td><td class="heat" style="background: color-mix(in srgb, #2f6f4e 41%, transparent)">3,8%</td><td class="heat" style="background: color-mix(in srgb, #2f6f4e 21%, transparent)">2,0%</td></tr><tr><th>R3</th><td class="heat" style="background: color-mix(in srgb, #2f6f4e 58%, transparent)">5,5%</td><td class="heat" style="background: color-mix(in srgb, #2f6f4e 47%, transparent)">4,5%</td><td class="heat" style="background: color-mix(in srgb, #2f6f4e 36%, transparent)">3,4%</td><td class="heat" style="background: color-mix(in srgb, #2f6f4e 35%, transparent)">3,3%</td><td class="heat" style="background: color-mix(in srgb, #2f6f4e 35%, transparent)">3,3%</td></tr><tr><th>R2</th><td class="heat" style="background: color-mix(in srgb, #2f6f4e 29%, transparent)">2,7%</td><td class="heat" style="background: color-mix(in srgb, #2f6f4e 40%, transparent)">3,7%</td><td class="heat" style="background: color-mix(in srgb, #2f6f4e 44%, transparent)">4,2%</td><td class="heat" style="background: color-mix(in srgb, #2f6f4e 50%, transparent)">4,7%</td><td class="heat" style="background: color-mix(in srgb, #2f6f4e 49%, transparent)">4,6%</td></tr><tr><th>R1</th><td class="heat" style="background: color-mix(in srgb, #2f6f4e 52%, transparent)">4,9%</td><td class="heat" style="background: color-mix(in srgb, #2f6f4e 50%, transparent)">4,7%</td><td class="heat" style="background: color-mix(in srgb, #2f6f4e 46%, transparent)">4,4%</td><td class="heat" style="background: color-mix(in srgb, #2f6f4e 34%, transparent)">3,3%</td><td class="heat" style="background: color-mix(in srgb, #2f6f4e 29%, transparent)">2,8%</td></tr></tbody></table></div><p class="note">Клетки не равны по 4%, хотя оценки нарезаны на равные пятые части: давность и частота связаны — кто ходит часто, тот и был недавно.</p></section>
+<footer>Источник: витрина клиент_итог. Собрано 12.09.2026 командой <code>bi dashboard</code>; витрины пересобираются из данных, страница не правится руками.</footer>
+</main>
+</body>
+</html>

@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Качество данных</title>
+<style>
+:root { color-scheme: light dark; --ink:#151a21; --ink-2:#5c6773; --line:#e1e5ea; --bg:#f5f7f8;
+        --card:#ffffff; --good:#1f6b3a; --warn:#8a6100; --bad:#b3261e; }
+@media (prefers-color-scheme: dark) {
+  :root { --ink:#e9edf2; --ink-2:#98a2ad; --line:#2a3138; --bg:#10141a; --card:#181d24;
+          --good:#8fd6a8; --warn:#ffcc80; --bad:#ff8a80; }
+}
+* { box-sizing: border-box; }
+body { margin:0; padding:28px 16px 56px; background:var(--bg); color:var(--ink);
+       font:15px/1.55 "Segoe UI", Roboto, Arial, sans-serif; }
+main { max-width: 1040px; margin:0 auto; }
+h1 { font-size:1.6rem; margin:0 0 6px; }
+h2 { font-size:1.05rem; margin:0 0 4px; }
+.question { color:var(--ink-2); margin:0 0 18px; }
+.sub { color:var(--ink-2); font-size:.9rem; margin:0 0 10px; }
+.note { color:var(--ink-2); font-size:.86rem; margin:10px 0 0; }
+.cards { display:grid; grid-template-columns:repeat(auto-fit, minmax(190px,1fr)); gap:12px; margin-bottom:22px; }
+.card { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:14px 16px; }
+.card-title { font-size:.82rem; color:var(--ink-2); }
+.card-value { font-size:1.55rem; font-variant-numeric:tabular-nums; margin:4px 0 2px; }
+.card-note { font-size:.82rem; color:var(--ink-2); }
+.card.good .card-value { color:var(--good); }
+.card.warn .card-value { color:var(--warn); }
+.card.bad .card-value { color:var(--bad); }
+.block { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:16px; margin-bottom:16px; }
+.body { overflow-x:auto; }
+table { border-collapse:collapse; width:100%; font-size:.9rem; }
+th, td { padding:7px 10px; border-bottom:1px solid var(--line); text-align:left; }
+th.right, td.right { text-align:right; font-variant-numeric:tabular-nums; }
+thead th { color:var(--ink-2); font-weight:600; font-size:.82rem; }
+.chart { width:100%; height:auto; }
+.chart .tick { font-size:11px; fill:var(--ink-2); }
+.chart .value { font-size:11px; fill:var(--ink-2); font-variant-numeric:tabular-nums; }
+.legend { display:flex; flex-wrap:wrap; gap:14px; margin-top:8px; font-size:.84rem; color:var(--ink-2); }
+.legend i { display:inline-block; width:10px; height:10px; border-radius:2px; margin-right:6px; }
+.hbars .row { display:grid; grid-template-columns:minmax(120px,1fr) 3fr minmax(120px,auto); gap:10px;
+              align-items:center; padding:5px 0; }
+.hbars .label { font-size:.9rem; }
+.hbars .track { background:var(--line); border-radius:6px; height:14px; }
+.hbars .fill { display:block; height:14px; border-radius:6px; background:#2f6f4e; }
+.hbars .value { font-size:.86rem; color:var(--ink-2); font-variant-numeric:tabular-nums; text-align:right; }
+.heatmap td.heat { text-align:right; font-variant-numeric:tabular-nums; }
+.heatmap td.empty-cell { background:transparent; }
+.empty { color:var(--ink-2); }
+footer { color:var(--ink-2); font-size:.84rem; margin-top:24px; }
+code { background:var(--line); padding:1px 5px; border-radius:4px; }
+@media (max-width:560px) { .hbars .row { grid-template-columns:1fr; } .hbars .value { text-align:left; } }
+</style>
+</head>
+<body>
+<main>
+<h1>Качество данных</h1>
+<p class="question">Чему на этих дашбордах можно верить, а чему нельзя?</p>
+<p class="sub">Страница не написана руками: проверки и их результаты берутся из того же кода, который собирает витрины, поэтому она не может разойтись с тем, что происходит на самом деле.</p><div class="cards"><div class="card good"><div class="card-title">Проверок пройдено</div><div class="card-value">24 из 24</div><div class="card-note">прогоняются при каждой пересборке витрин</div></div><div class="card "><div class="card-title">Данные по</div><div class="card-value">08.2026</div><div class="card-note">последний день — 31.08.2026</div></div><div class="card "><div class="card-title">Возраст данных</div><div class="card-value">12 дн.</div><div class="card-note">с последнего дня продаж до сборки страницы</div></div><div class="card "><div class="card-title">Известных ограничений</div><div class="card-value">7</div><div class="card-note">перечислены ниже полностью</div></div></div>
+<section class="block"><h2>Известные ограничения</h2><p class="sub">то, что проверками не ловится, но влияет на выводы</p><div class="body"><table><thead><tr><th class="">Ограничение</th><th class="">Где сказывается</th><th class="">В чём дело</th></tr></thead><tbody><tr><td class="">Выручка канала не измерена</td><td class="">маркетинг</td><td class="">Выручка сети разнесена по каналам пропорционально заказам. Окупаемость канала — оценка.</td></tr><tr><td class="">Реклама и касса не сходятся</td><td class="">воронка</td><td class="">Реклама насчитала 128 094 заказов, касса — 350 193 чеков самовывоза и доставки. Разница 173,4%.</td></tr><tr><td class="">Складской учёт неполный</td><td class="">остатки</td><td class="">Остатки ведутся по 200 позициям из 900. Оборачиваемость считается только по ним, на весь ассортимент её распространять нельзя.</td></tr><tr><td class="">Пропуски в справочнике товаров</td><td class="">маржинальность</td><td class="">У 27 товаров не заполнен поставщик; на них приходится 2,9% выручки. В отчётах они идут строкой «не указан».</td></tr><tr><td class="">Остатки — снимок, а не среднее</td><td class="">остатки</td><td class="">Запас зафиксирован на первое число месяца. Колебания внутри месяца данным недоступны.</td></tr><tr><td class="">Нет аренды и налогов</td><td class="">финансы</td><td class="">Операционный результат считается до аренды и налогов: этих расходов в источниках нет.</td></tr><tr><td class="">Возвраты не вычтены из выручки</td><td class="">продажи, финансы</td><td class="">Выручка на дашбордах — со скидкой, но до возвратов. Возвраты стоят отдельной строкой в финансах.</td></tr></tbody></table></div><p class="note">Этот список важнее зелёных галочек ниже. Проверки ловят поломки, а здесь перечислено то, что работает как задумано, но означает не то, что кажется на первый взгляд.</p></section><section class="block"><h2>Проверки витрин</h2><p class="sub">выполняются при каждой сборке; страница собирается из того же кода, что и они</p><div class="body"><table><thead><tr><th class="">Витрина</th><th class="">Проверка</th><th class="">Итог</th></tr></thead><tbody><tr><td class="">продажи_позиции</td><td class="">таблица не пуста</td><td class="">+ строк 3749162</td></tr><tr><td class="">продажи_позиции</td><td class="">нет пропусков</td><td class="">+ пропусков нет</td></tr><tr><td class="">продажи_позиции</td><td class="">продажи_позиции.магазин_id → магазины.магазин_id</td><td class="">+ все ссылки на месте</td></tr><tr><td class="">продажи_позиции</td><td class="">значения в пределах 0.0…0.5</td><td class="">+ всё в пределах</td></tr><tr><td class="">продажи_день</td><td class="">таблица не пуста</td><td class="">+ строк 8302</td></tr><tr><td class="">продажи_день</td><td class="">значения не меньше 0.0</td><td class="">+ всё в пределах</td></tr><tr><td class="">продажи_месяц</td><td class="">таблица не пуста</td><td class="">+ строк 273</td></tr><tr><td class="">продажи_месяц</td><td class="">ключ уникален</td><td class="">+ повторов нет</td></tr><tr><td class="">продажи_месяц</td><td class="">значения в пределах 0.0…1.0</td><td class="">+ всё в пределах</td></tr><tr><td class="">товар_месяц</td><td class="">таблица не пуста</td><td class="">+ строк 21600</td></tr><tr><td class="">товар_месяц</td><td class="">товар_месяц.товар_id → товары.товар_id</td><td class="">+ все ссылки на месте</td></tr><tr><td class="">клиент_итог</td><td class="">таблица не пуста</td><td class="">+ строк 8896</td></tr><tr><td class="">клиент_итог</td><td class="">ключ уникален</td><td class="">+ повторов нет</td></tr><tr><td class="">клиент_итог</td><td class="">значения не меньше 1</td><td class="">+ всё в пределах</td></tr><tr><td class="">возвраты_месяц</td><td class="">таблица не пуста</td><td class="">+ строк 1092</td></tr><tr><td class="">возвраты_месяц</td><td class="">значения не меньше 0.0</td><td class="">+ всё в пределах</td></tr><tr><td class="">маркетинг_месяц</td><td class="">таблица не пуста</td><td class="">+ строк 120</td></tr><tr><td class="">маркетинг_месяц</td><td class="">значения не меньше 0.0</td><td class="">+ всё в пределах</td></tr><tr><td class="">остатки_месяц</td><td class="">таблица не пуста</td><td class="">+ строк 288</td></tr><tr><td class="">остатки_месяц</td><td class="">значения не меньше 0</td><td class="">+ всё в пределах</td></tr><tr><td class="">персонал_месяц</td><td class="">таблица не пуста</td><td class="">+ строк 288</td></tr><tr><td class="">персонал_месяц</td><td class="">значения не меньше 0</td><td class="">+ всё в пределах</td></tr><tr><td class="">обращения_месяц</td><td class="">таблица не пуста</td><td class="">+ строк 1350</td></tr><tr><td class="">обращения_месяц</td><td class="">значения в пределах 0.0…240.0</td><td class="">+ всё в пределах</td></tr></tbody></table></div></section><section class="block"><h2>Размеры таблиц</h2><p class="sub">строк в каждой таблице склада</p><div class="body"><table><thead><tr><th class="">Таблица</th><th class="right">Строк</th></tr></thead><tbody><tr><td class="">позиции</td><td class="right">3 749 162</td></tr><tr><td class="">продажи_позиции</td><td class="right">3 749 162</td></tr><tr><td class="">чеки</td><td class="right">1 250 382</td></tr><tr><td class="">возвраты</td><td class="right">63 736</td></tr><tr><td class="">остатки</td><td class="right">57 600</td></tr><tr><td class="">товар_месяц</td><td class="right">21 600</td></tr><tr><td class="">клиент_итог</td><td class="right">8 896</td></tr><tr><td class="">продажи_день</td><td class="right">8 302</td></tr><tr><td class="">обращения</td><td class="right">4 200</td></tr><tr><td class="">обращения_месяц</td><td class="right">1 350</td></tr><tr><td class="">возвраты_месяц</td><td class="right">1 092</td></tr><tr><td class="">товары</td><td class="right">900</td></tr><tr><td class="">остатки_месяц</td><td class="right">288</td></tr><tr><td class="">персонал_месяц</td><td class="right">288</td></tr><tr><td class="">план</td><td class="right">273</td></tr><tr><td class="">продажи_месяц</td><td class="right">273</td></tr><tr><td class="">сотрудники</td><td class="right">202</td></tr><tr><td class="">маркетинг</td><td class="right">120</td></tr><tr><td class="">маркетинг_месяц</td><td class="right">120</td></tr><tr><td class="">магазины</td><td class="right">12</td></tr></tbody></table></div></section>
+<footer>Источник: проверки слоя моделей и сами витрины. Собрано 12.09.2026 командой <code>bi dashboard</code>; витрины пересобираются из данных, страница не правится руками.</footer>
+</main>
+</body>
+</html>

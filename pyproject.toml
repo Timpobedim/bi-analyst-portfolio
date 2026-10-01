@@ -1,0 +1,54 @@
+[project]
+name = "bi-analyst-portfolio"
+version = "1.0.0"
+description = "Витрины и дашборды: слой моделей на SQL, единый словарь метрик и самодостаточные страницы"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "duckdb>=1.1",
+    "pandas>=2.2",
+]
+
+[project.scripts]
+bi = "bi.cli:main"
+
+[dependency-groups]
+dev = [
+    "pytest>=8.4",
+    "ruff>=0.12",
+    "mypy>=1.17",
+    "pandas-stubs>=2.2",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/bi"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+
+[tool.ruff]
+line-length = 120
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "S", "C4", "SIM", "PT", "RUF", "DTZ"]
+# RUF001-003: в русских строках есть кириллица, похожая на латиницу, — это нормально.
+ignore = ["RUF001", "RUF002", "RUF003"]
+
+[tool.ruff.lint.per-file-ignores]
+# S311: данные витрин генерируются псевдослучайно, это не криптография.
+"src/bi/data.py" = ["S311"]
+"tests/**" = ["S101", "S311"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["bi"]
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+files = ["src"]

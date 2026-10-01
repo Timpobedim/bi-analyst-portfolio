@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Маржинальность и скидки</title>
+<style>
+:root { color-scheme: light dark; --ink:#151a21; --ink-2:#5c6773; --line:#e1e5ea; --bg:#f5f7f8;
+        --card:#ffffff; --good:#1f6b3a; --warn:#8a6100; --bad:#b3261e; }
+@media (prefers-color-scheme: dark) {
+  :root { --ink:#e9edf2; --ink-2:#98a2ad; --line:#2a3138; --bg:#10141a; --card:#181d24;
+          --good:#8fd6a8; --warn:#ffcc80; --bad:#ff8a80; }
+}
+* { box-sizing: border-box; }
+body { margin:0; padding:28px 16px 56px; background:var(--bg); color:var(--ink);
+       font:15px/1.55 "Segoe UI", Roboto, Arial, sans-serif; }
+main { max-width: 1040px; margin:0 auto; }
+h1 { font-size:1.6rem; margin:0 0 6px; }
+h2 { font-size:1.05rem; margin:0 0 4px; }
+.question { color:var(--ink-2); margin:0 0 18px; }
+.sub { color:var(--ink-2); font-size:.9rem; margin:0 0 10px; }
+.note { color:var(--ink-2); font-size:.86rem; margin:10px 0 0; }
+.cards { display:grid; grid-template-columns:repeat(auto-fit, minmax(190px,1fr)); gap:12px; margin-bottom:22px; }
+.card { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:14px 16px; }
+.card-title { font-size:.82rem; color:var(--ink-2); }
+.card-value { font-size:1.55rem; font-variant-numeric:tabular-nums; margin:4px 0 2px; }
+.card-note { font-size:.82rem; color:var(--ink-2); }
+.card.good .card-value { color:var(--good); }
+.card.warn .card-value { color:var(--warn); }
+.card.bad .card-value { color:var(--bad); }
+.block { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:16px; margin-bottom:16px; }
+.body { overflow-x:auto; }
+table { border-collapse:collapse; width:100%; font-size:.9rem; }
+th, td { padding:7px 10px; border-bottom:1px solid var(--line); text-align:left; }
+th.right, td.right { text-align:right; font-variant-numeric:tabular-nums; }
+thead th { color:var(--ink-2); font-weight:600; font-size:.82rem; }
+.chart { width:100%; height:auto; }
+.chart .tick { font-size:11px; fill:var(--ink-2); }
+.chart .value { font-size:11px; fill:var(--ink-2); font-variant-numeric:tabular-nums; }
+.legend { display:flex; flex-wrap:wrap; gap:14px; margin-top:8px; font-size:.84rem; color:var(--ink-2); }
+.legend i { display:inline-block; width:10px; height:10px; border-radius:2px; margin-right:6px; }
+.hbars .row { display:grid; grid-template-columns:minmax(120px,1fr) 3fr minmax(120px,auto); gap:10px;
+              align-items:center; padding:5px 0; }
+.hbars .label { font-size:.9rem; }
+.hbars .track { background:var(--line); border-radius:6px; height:14px; }
+.hbars .fill { display:block; height:14px; border-radius:6px; background:#2f6f4e; }
+.hbars .value { font-size:.86rem; color:var(--ink-2); font-variant-numeric:tabular-nums; text-align:right; }
+.heatmap td.heat { text-align:right; font-variant-numeric:tabular-nums; }
+.heatmap td.empty-cell { background:transparent; }
+.empty { color:var(--ink-2); }
+footer { color:var(--ink-2); font-size:.84rem; margin-top:24px; }
+code { background:var(--line); padding:1px 5px; border-radius:4px; }
+@media (max-width:560px) { .hbars .row { grid-template-columns:1fr; } .hbars .value { text-align:left; } }
+</style>
+</head>
+<body>
+<main>
+<h1>Маржинальность и скидки</h1>
+<p class="question">Где сеть зарабатывает и сколько отдаёт скидкой?</p>
+<p class="sub">Маржинальность здесь валовая: выручка минус себестоимость товара. Аренда, зарплата и реклама в неё не входят — они на дашборде финансов.</p><div class="cards"><div class="card "><div class="card-title">Валовая прибыль</div><div class="card-value">243 098 073 ₽</div><div class="card-note">маржинальность 23,5%</div></div><div class="card "><div class="card-title">Отдано скидкой</div><div class="card-value">18 936 070 ₽</div><div class="card-note">1,8% от цены без скидки</div></div><div class="card good"><div class="card-title">Лучшая категория</div><div class="card-value">бытовая химия</div><div class="card-note">32,8% маржи</div></div><div class="card warn"><div class="card-title">Худшая категория</div><div class="card-value">мясо и рыба</div><div class="card-note">18,1% маржи</div></div></div>
+<section class="block"><h2>Категории</h2><p class="sub">выручка, прибыль и цена скидок</p><div class="body"><table><thead><tr><th class="">Категория</th><th class="right">Выручка</th><th class="right">Прибыль</th><th class="right">Маржинальность</th><th class="right">Отдано скидкой</th><th class="right">Позиций со скидкой</th></tr></thead><tbody><tr><td class="">молочное</td><td class="right">323 089 236 ₽</td><td class="right">66 627 749 ₽</td><td class="right">20,6%</td><td class="right">5 946 038 ₽</td><td class="right">20,0%</td></tr><tr><td class="">бакалея</td><td class="right">255 330 675 ₽</td><td class="right">65 540 068 ₽</td><td class="right">25,7%</td><td class="right">4 653 014 ₽</td><td class="right">19,9%</td></tr><tr><td class="">овощи и фрукты</td><td class="right">128 453 275 ₽</td><td class="right">28 785 515 ₽</td><td class="right">22,4%</td><td class="right">2 368 290 ₽</td><td class="right">20,1%</td></tr><tr><td class="">мясо и рыба</td><td class="right">148 500 577 ₽</td><td class="right">26 870 715 ₽</td><td class="right">18,1%</td><td class="right">2 689 443 ₽</td><td class="right">19,9%</td></tr><tr><td class="">напитки</td><td class="right">85 914 951 ₽</td><td class="right">25 744 425 ₽</td><td class="right">30,0%</td><td class="right">1 573 131 ₽</td><td class="right">19,9%</td></tr><tr><td class="">бытовая химия</td><td class="right">60 248 269 ₽</td><td class="right">19 786 580 ₽</td><td class="right">32,8%</td><td class="right">1 096 066 ₽</td><td class="right">20,0%</td></tr><tr><td class="">детское</td><td class="right">33 536 900 ₽</td><td class="right">9 743 022 ₽</td><td class="right">29,1%</td><td class="right">610 089 ₽</td><td class="right">20,1%</td></tr></tbody></table></div><p class="note">«Отдано скидкой» — разница между ценой без скидки и тем, что пробито на кассе. Это не убыток: часть этих покупок без скидки просто не состоялась бы. Но это цена, которую стоит знать, прежде чем расширять акцию.</p></section><section class="block"><h2>Прибыль по категориям</h2><p class="sub">валовая прибыль за весь период, ₽</p><div class="body"><div class="hbars"><div class="row"><span class="label">молочное</span><span class="track"><span class="fill" style="width:100.0%"></span></span><span class="value">66,6 млн</span></div><div class="row"><span class="label">бакалея</span><span class="track"><span class="fill" style="width:98.4%"></span></span><span class="value">65,5 млн</span></div><div class="row"><span class="label">овощи и фрукты</span><span class="track"><span class="fill" style="width:43.2%"></span></span><span class="value">28,8 млн</span></div><div class="row"><span class="label">мясо и рыба</span><span class="track"><span class="fill" style="width:40.3%"></span></span><span class="value">26,9 млн</span></div><div class="row"><span class="label">напитки</span><span class="track"><span class="fill" style="width:38.6%"></span></span><span class="value">25,7 млн</span></div><div class="row"><span class="label">бытовая химия</span><span class="track"><span class="fill" style="width:29.7%"></span></span><span class="value">19,8 млн</span></div><div class="row"><span class="label">детское</span><span class="track"><span class="fill" style="width:14.6%"></span></span><span class="value">9,7 млн</span></div></div></div></section><section class="block"><h2>Маржинальность и скидки по месяцам</h2><p class="sub">доли; линии идут в противофазе, когда рост держится на акциях</p><div class="body"><svg viewBox="0 0 760 280" role="img" preserveAspectRatio="xMidYMid meet" class="chart"><polyline points="0.0,26.4 33.0,26.3 66.1,26.5 99.1,26.4 132.2,26.9 165.2,26.5 198.3,26.3 231.3,26.3 264.3,26.0 297.4,26.4 330.4,26.7 363.5,26.4 396.5,26.7 429.6,26.5 462.6,26.1 495.7,26.3 528.7,26.8 561.7,26.4 594.8,26.1 627.8,26.3 660.9,26.8 693.9,26.2 727.0,26.5 760.0,26.5" fill="none" stroke="#2f6f4e" stroke-width="2.5"/><polyline points="0.0,229.2 33.0,229.3 66.1,229.3 99.1,229.1 132.2,228.9 165.2,229.3 198.3,229.4 231.3,229.0 264.3,229.4 297.4,229.2 330.4,228.9 363.5,229.4 396.5,229.1 429.6,229.2 462.6,229.4 495.7,229.4 528.7,229.0 561.7,229.2 594.8,229.2 627.8,229.3 660.9,229.0 693.9,229.3 727.0,229.2 760.0,229.2" fill="none" stroke="#a8451f" stroke-width="2.5"/><text class="tick" x="0.0" y="268" text-anchor="middle">09.24</text><text class="tick" x="66.1" y="268" text-anchor="middle">11.24</text><text class="tick" x="132.2" y="268" text-anchor="middle">01.25</text><text class="tick" x="198.3" y="268" text-anchor="middle">03.25</text><text class="tick" x="264.3" y="268" text-anchor="middle">05.25</text><text class="tick" x="330.4" y="268" text-anchor="middle">07.25</text><text class="tick" x="396.5" y="268" text-anchor="middle">09.25</text><text class="tick" x="462.6" y="268" text-anchor="middle">11.25</text><text class="tick" x="528.7" y="268" text-anchor="middle">01.26</text><text class="tick" x="594.8" y="268" text-anchor="middle">03.26</text><text class="tick" x="660.9" y="268" text-anchor="middle">05.26</text><text class="tick" x="727.0" y="268" text-anchor="middle">07.26</text></svg><div class="legend"><span class="legend-item"><i style="background:#2f6f4e"></i>маржинальность</span><span class="legend-item"><i style="background:#a8451f"></i>доля скидки</span></div></div></section><section class="block"><h2>Поставщики</h2><div class="body"><table><thead><tr><th class="">Поставщик</th><th class="right">Товаров</th><th class="right">Выручка</th><th class="right">Прибыль</th><th class="right">Маржинальность</th></tr></thead><tbody><tr><td class="">Поставщик Б</td><td class="right">129</td><td class="right">157 839 596 ₽</td><td class="right">38 114 391 ₽</td><td class="right">24,1%</td></tr><tr><td class="">Поставщик Д</td><td class="right">109</td><td class="right">135 497 304 ₽</td><td class="right">31 611 072 ₽</td><td class="right">23,3%</td></tr><tr><td class="">Поставщик В</td><td class="right">106</td><td class="right">128 220 889 ₽</td><td class="right">30 724 681 ₽</td><td class="right">24,0%</td></tr><tr><td class="">Поставщик Е</td><td class="right">110</td><td class="right">122 352 074 ₽</td><td class="right">29 204 514 ₽</td><td class="right">23,9%</td></tr><tr><td class="">Поставщик А</td><td class="right">116</td><td class="right">120 002 690 ₽</td><td class="right">27 103 403 ₽</td><td class="right">22,6%</td></tr><tr><td class="">Поставщик З</td><td class="right">98</td><td class="right">115 699 836 ₽</td><td class="right">26 571 814 ₽</td><td class="right">23,0%</td></tr><tr><td class="">Поставщик Г</td><td class="right">103</td><td class="right">113 817 381 ₽</td><td class="right">26 659 199 ₽</td><td class="right">23,4%</td></tr><tr><td class="">Поставщик Ж</td><td class="right">102</td><td class="right">111 341 468 ₽</td><td class="right">26 116 850 ₽</td><td class="right">23,5%</td></tr><tr><td class="">не указан</td><td class="right">27</td><td class="right">30 302 646 ₽</td><td class="right">6 992 149 ₽</td><td class="right">23,1%</td></tr></tbody></table></div><p class="note">Строка «не указан» — не поставщик, а дыра в справочнике: 27 товаров без заполненного поля, и на них приходится 2,9% выручки. Прятать такую строку нельзя: тогда сумма по поставщикам не сойдётся с общей выручкой.</p></section>
+<footer>Источник: витрина продажи_позиции. Собрано 12.09.2026 командой <code>bi dashboard</code>; витрины пересобираются из данных, страница не правится руками.</footer>
+</main>
+</body>
+</html>
